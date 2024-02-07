@@ -13,7 +13,7 @@ func check(e error) {
 }
 
 func getFile(fPath string) string {
-	dat, err := os.ReadFile("./public/" + fPath)
+	dat, err := os.ReadFile("./public" + fPath)
 
 	check(err)
 	datString := string(dat)
@@ -31,10 +31,17 @@ func handler1(w http.ResponseWriter, r *http.Request) {
 
 	// find the URL Path
 	uPath := r.URL.Path
-
+	fmt.Println(uPath)
 	if uPath == "/" {
 		// serve index.html
-		resp := getFile("index.html")
+		resp := getFile("/index.html")
+		fmt.Fprintln(w, resp)
+	} else if uPath == "/favicon.ico" {
+		// do nothing
+	} else {
+		// match the pathName and check for exact filename
+		// remove the initial / optional
+		resp := getFile(uPath)
 		fmt.Fprintln(w, resp)
 	}
 }
