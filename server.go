@@ -72,11 +72,3 @@ func handler1(w http.ResponseWriter, r *http.Request) {
 
 	}
 }
-
-/*
-	request lifecycle -> only serves text files
-
-	1. check if file with exact file name exist -> then serve the file
-	2. if file does not exist -> fileName.html -> if found then serve the file
-	3. if not found .html -> return 404 NOT FOUND
-*/
