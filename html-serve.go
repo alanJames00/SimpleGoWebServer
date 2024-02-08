@@ -31,14 +31,47 @@ func handler1(w http.ResponseWriter, r *http.Request) {
 	if uPath == "/" {
 		// serve index.html
 		resp := getFile("/index.html")
-		fmt.Fprintln(w, resp)
+		if resp == "fError" {
+
+			// show 404
+			fmt.Fprintln(w, "404 NOT FOUND")
+
+		} else {
+
+			fmt.Fprintln(w, resp)
+
+		}
 	} else if uPath == "/favicon.ico" {
+
 		// do nothing
+
 	} else {
+
 		// match the pathName and check for exact filename
 		// remove the initial / optional
 		resp := getFile(uPath)
-		fmt.Fprintln(w, resp)
+		if resp == "fError" {
+
+			// add .html to the filename and try again
+			resp2 := getFile(uPath + ".html")
+
+			if resp2 == "fError" {
+
+				// show 404
+				fmt.Fprintln(w, "404 NOT FOUND")
+
+			} else {
+
+				// serve the file with .html
+				fmt.Fprintln(w, resp2)
+			}
+
+		} else {
+
+			// serve the file with exact filename
+			fmt.Fprintln(w, resp)
+		}
+
 	}
 }
 
