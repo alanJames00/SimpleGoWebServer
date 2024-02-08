@@ -6,18 +6,14 @@ import (
 	"os"
 )
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
 func getFile(fPath string) string {
 	dat, err := os.ReadFile("./public" + fPath)
+	if err != nil {
+		fmt.Println(err)
+		return "fError"
+	}
 
-	check(err)
 	datString := string(dat)
-
 	return datString
 }
 
@@ -47,7 +43,7 @@ func handler1(w http.ResponseWriter, r *http.Request) {
 }
 
 /*
-	request lifecycle -> only serves
+	request lifecycle -> only serves text files
 
 	1. check if file with exact file name exist -> then serve the file
 	2. if file does not exist -> fileName.html -> if found then serve the file
