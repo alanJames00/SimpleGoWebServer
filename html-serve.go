@@ -34,6 +34,7 @@ func handler1(w http.ResponseWriter, r *http.Request) {
 		if resp == "fError" {
 
 			// show 404
+			w.WriteHeader(http.StatusNotFound)
 			fmt.Fprintln(w, "404 NOT FOUND")
 
 		} else {
@@ -41,10 +42,6 @@ func handler1(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintln(w, resp)
 
 		}
-	} else if uPath == "/favicon.ico" {
-
-		// do nothing
-
 	} else {
 
 		// match the pathName and check for exact filename
@@ -58,6 +55,7 @@ func handler1(w http.ResponseWriter, r *http.Request) {
 			if resp2 == "fError" {
 
 				// show 404
+				w.WriteHeader(http.StatusNotFound)
 				fmt.Fprintln(w, "404 NOT FOUND")
 
 			} else {
